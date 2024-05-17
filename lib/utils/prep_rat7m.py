@@ -5,6 +5,13 @@ import json
 from collections import defaultdict
 import pickle as pkl
 
+s_36_flip_pairs = np.array(
+    [[1, 4], [2, 5], [3, 6], [14, 11], [15, 12], [16, 13]], dtype=np.int32
+)
+s_36_parent_ids = np.array(
+    [0, 0, 1, 2, 0, 4, 5, 0, 8, 8, 9, 8, 11, 12, 8, 14, 15], dtype=np.int32
+)
+
 
 def extract_camera_params(
     camera_params: Dict[str, List],
@@ -97,8 +104,8 @@ def create_dataset(
                     "height": height,
                     "joints_3d": joints_3d,
                     "joints_3d_vis": joints_3d_vis,
-                    "flip_pairs": TODO,
-                    "parent_ids": TODO,
+                    "flip_pairs": s_36_flip_pairs,
+                    "parent_ids": s_36_parent_ids,
                     "cam": cam_params,
                     "subject": subject_id,
                     "action": action,
