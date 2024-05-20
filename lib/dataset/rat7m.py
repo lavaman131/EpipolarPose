@@ -22,12 +22,12 @@ H36M_TO_MPII_PERM = np.array(
 )
 
 
-class H36M_Integral(JointsIntegralDataset):
+class Rat7M_Integral(JointsIntegralDataset):
     def __init__(self, cfg, root, image_set, is_train):
         super().__init__(cfg, root, image_set, is_train)
 
         self.parent_ids = np.array(
-            [0, 0, 1, 2, 0, 4, 5, 0, 8, 8, 9, 8, 11, 12, 8, 14, 15], dtype=np.int
+            [0, 0, 1, 2, 0, 4, 5, 0, 8, 8, 9, 8, 11, 12, 8, 14, 15], dtype=np.int32
         )
 
         self.cam_config = [

@@ -5,6 +5,7 @@ import json
 from collections import defaultdict
 import pickle as pkl
 from tqdm.auto import tqdm
+from easydict import EasyDict as edict
 
 s_36_flip_pairs = np.array(
     [[1, 4], [2, 5], [3, 6], [14, 11], [15, 12], [16, 13]], dtype=np.int32
@@ -67,7 +68,6 @@ def create_dataset(
         str, Path
     ],  # e.g. "/projectnb/ivc-ml/Datasets/PoseEstimation/Rat7M_processed"
 ) -> None:
-    assert split in ["train", "test"]
     data_dir = Path(data_dir) if isinstance(data_dir, str) else data_dir
     save_dir = Path(save_dir) if isinstance(save_dir, str) else save_dir
 
@@ -89,7 +89,16 @@ def create_dataset(
             with open(camera_dir.joinpath("camera_params.json")) as f:
                 camera_params = json.load(f)
             R, T, K, f, c, projection_matrix = extract_camera_params(camera_params)
-            cam_params = {"R": R, "T": T, "K": K, "f": f, "c": c}
+            cam_params = edict(
+                {
+                    "R": R,
+                    "T": T,
+                    "K": K,
+                    "f": f,
+                    "c": c,
+                    "projection_matrix": projection_matrix,
+                }
+            )
             camera_id = camera_idx + 1
             images_dir = camera_dir.joinpath("images")
             for image_path in images_dir.iterdir():
@@ -127,5 +136,5 @@ if __name__ == "__main__":
     save_dir = "/projectnb/ivc-ml/alavaee/data/Rat7M_processed"
     train_subject_fnames = ["s1-d1", "s2-d1", "s2-d2", "s3-d1", "s4-d1"]
     test_subject_fnames = ["s5-d1", "s5-d2"]
-    create_dataset(train_subject_fnames, "train", data_dir, save_dir)
+    create_dataset(train_subject_fnames, "train-ss", data_dir, save_dir)
     create_dataset(test_subject_fnames, "test", data_dir, save_dir)

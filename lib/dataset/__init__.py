@@ -9,4 +9,5 @@ from __future__ import division
 from __future__ import print_function
 
 from lib.dataset.h36m import H36M_Integral as h36m
+from lib.dataset.rat7m import Rat7M_Integral as rat7m
 from lib.dataset.mpii_integral import MPIIDataset as mpii_integral
